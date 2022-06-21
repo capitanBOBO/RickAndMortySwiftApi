@@ -1,3 +1,3 @@
 # rickAndMortySwiftApi
 
-A description of this package.
+Rick And Morty API for swift

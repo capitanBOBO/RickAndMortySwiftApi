@@ -1,11 +1,11 @@
 import XCTest
-@testable import rickAndMortySwiftApi
+@testable import RickAndMortySwiftApi
 
-final class rickAndMortySwiftApiTests: XCTestCase {
+final class RickAndMortySwiftApiTests: XCTestCase {
     func testExample() throws {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct
         // results.
-        XCTAssertEqual(rickAndMortySwiftApi().text, "Hello, World!")
+        XCTAssertEqual(RickAndMortySwiftApi().text, "Hello, World!")
     }
 }
