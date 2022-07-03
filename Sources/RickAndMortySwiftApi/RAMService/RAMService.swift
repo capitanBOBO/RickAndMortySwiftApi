@@ -1,15 +1,19 @@
 import Foundation
 
 enum RAMEndpoint<U: RAMFilter, O: RAMBasePath>: RAMEndpointInterface {
-    case getAllItems
+    case getAllItems(_ page: UInt)
     case getItemById(_ id: UInt)
     case getItemsByIds(_ ids: [UInt])
     case getItemsByFilter(_ filter: U)
 
     var path: String {
         switch self {
-        case .getAllItems:
-            return basePath
+        case .getAllItems(let page):
+            if page == 1 {
+                return basePath
+            } else {
+                return basePath + "/?page=\(page)"
+            }
         case .getItemById(let id):
             return basePath + "/\(id)"
         case .getItemsByIds(let ids):
@@ -53,7 +57,7 @@ struct RAMService<T: Codable, U: RAMFilter, O: RAMBasePath> {
     }
 
     @discardableResult public func getAllItems(page: UInt, completion: @escaping (Result<[T], Error>) -> ()) -> URLSessionTask? {
-        let endpoint = RAMEndpoint<U, O>.getAllItems
+        let endpoint = RAMEndpoint<U, O>.getAllItems(page)
 
         return network.execute(endpoint) { result in
             var completionResult: Result<[T], Error>

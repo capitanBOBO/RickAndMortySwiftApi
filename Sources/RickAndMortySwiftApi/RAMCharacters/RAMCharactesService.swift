@@ -1,7 +1,7 @@
 import Foundation
 
 enum RAMCharacterBasePath: RAMBasePath {
-    static let basePath: String = "charater"
+    static let basePath: String = "character"
 }
 
 public struct RAMCharacterFilter: RAMFilter {
