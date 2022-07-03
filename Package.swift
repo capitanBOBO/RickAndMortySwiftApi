@@ -23,6 +23,9 @@ let package = Package(
             dependencies: []),
         .testTarget(
             name: "RickAndMortySwiftApiTests",
-            dependencies: ["RickAndMortySwiftApi"]),
+            dependencies: ["RickAndMortySwiftApi"],
+            resources: [
+                .process("TestData")
+            ]),
     ]
 )
