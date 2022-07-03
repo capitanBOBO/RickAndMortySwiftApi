@@ -5,13 +5,13 @@ import Foundation
 /// - Parameter charactes: list of character urls
 /// - Parameter created: time of creation in database
 public struct RAMEpisodeModel: Codable {
-    let id: Int?
-    let name: String?
-    let airDate: String?
-    let episode: String?
-    let charactes: [String]?
-    let url: String?
-    let created: String?
+    public let id: Int?
+    public let name: String?
+    public let airDate: String?
+    public let episode: String?
+    public let charactes: [String]?
+    public let url: String?
+    public let created: String?
 
     enum CodinigKeys: String, CodingKey {
         case airDate = "air_date"
