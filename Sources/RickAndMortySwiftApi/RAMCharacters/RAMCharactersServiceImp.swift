@@ -1,24 +1,20 @@
 import Foundation
 
-/**
- Characters request base path.
- - Parameters:
-     - static basePath: "character" (String)
-*/
+/// Characters request base path `character`.
 enum RAMCharacterBasePath: RAMBasePath {
     static let basePath: String = "character"
 }
 
 /// RAMCharactersService realisation
-struct RAMCharactesServiceRealisation: RAMCharactersService {
+struct RAMCharactesServiceImp: RAMCharactersService {
     private typealias RAMServiceAlias = RAMService<RAMCharacterModel, RAMCharacterFilter, RAMCharacterBasePath>
     private let service: RAMServiceAlias
     /**
     Initialization of service
     - Parameters:
-        - networkService: network service for requests ~~~RAMNetworkServiceInterface~~~
+        - networkService: network service for requests `RAMNetworkServiceInterface`
 
-    - Returns: Characters service ~~~RAMCharactesServiceRealisation~~~
+    - Returns: Characters service
     */
     init(networkService: RAMNetworkServiceInterface) {
         service = RAMServiceAlias(networkService)

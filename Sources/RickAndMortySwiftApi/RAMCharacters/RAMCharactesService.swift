@@ -2,12 +2,14 @@ import Foundation
 
 /**
  Characters request filter
- - Parameters:
-     - name: Character name (String?).
-     - status: Character status ('Alive', 'Dead' or 'unknown') (String?).
-     - species: Character species (String?).
-     - type: Character type (String?).
-     - gender: Character gender (String?).
+```
+// Parameters:
+//    name    : String? - Character name.
+//    status  : String? - Character status ('Alive', 'Dead' or 'unknown').
+//    species : String? - Character species.
+//    type    : String? - Character type.
+//    gender  : String? - Character gender.
+```
 */
 public struct RAMCharacterFilter: RAMFilter {
     /// Character name
@@ -23,11 +25,11 @@ public struct RAMCharacterFilter: RAMFilter {
 
     /**
     Query for request.
-    ~~~
+    ```
     RAMCharacterFilter(name: "Rick", species: "Human")
     
     // "?name=Rick&status=Human"
-    ~~~
+    ```
     */
     var query: String {
         var result = "?"
@@ -79,9 +81,7 @@ public struct RAMCharacterFilter: RAMFilter {
     }
 }
 
-/**
-Characters service. Allows to request all characters or characters by id/filter
-*/
+/// Characters service. Allows to request all characters or characters by id/filter
 public protocol RAMCharactersService {
 
     /**
@@ -117,7 +117,7 @@ public protocol RAMCharactersService {
     /**
     Requests characters by filter
     - Parameters:
-        - filter: characters filter ~~~RAMCharacterFilter~~~
+        - filter: characters filter `RAMCharacterFilter`
         - completion: closure, result with response
 
     - Returns: discardable URLSessionTask (optional)
