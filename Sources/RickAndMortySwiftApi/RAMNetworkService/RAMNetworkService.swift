@@ -13,15 +13,23 @@ protocol RAMNetworkServiceInterface {
 
 struct RAMNetworkService: RAMNetworkServiceInterface {
     private let basePath = "https://rickandmortyapi.com/api/"
+    private var session: URLSession {
+        URLSession(configuration: .default)
+    }
+
+    private func prepareRequest(for endpoint: RAMEndpointInterface) -> URLRequest? {
+        guard let url = URL(string: basePath + endpoint.path) else { return nil }
+        var request = URLRequest(url: url)
+        request.httpMethod = endpoint.method
+        return request
+    }
 
     @discardableResult func execute(_ endpoint: RAMEndpointInterface, completion: @escaping (Result<Data, Error>) -> Void) -> URLSessionTask? {
-        guard let url = URL(string: basePath + endpoint.path) else {
+        guard let request = prepareRequest(for: endpoint) else {
             completion(.failure(RAMNetworkError.invalidUrl))
             return nil
         }
-        var request = URLRequest(url: url)
-        request.httpMethod = endpoint.method
-        let session = URLSession(configuration: .default)
+
         let task = session.dataTask(with: request) { data, response, error in
             if let error = error {
                 completion(.failure(error))

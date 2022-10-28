@@ -1,16 +1,24 @@
 import Foundation
+
+/// Rick and Morty API entrypoint
 public struct RAMApi {
     private let networkService = RAMNetworkService()
+
+    /// Characters service access
     public var characters: RAMCharactersService {
-        RAMCharactesServiceRealisation(networkService: networkService)
+        RAMCharactesServiceImp(networkService: networkService)
     }
 
-    public var locations: RAMLocationService {
-        RAMLocationServiceRealisation(network: networkService)
+    /// Locations services access
+    public var locations: RAMLocationsService {
+        RAMLocationsServiceImp(networkService: networkService)
     }
 
-    public var episodes: RAMEpisodeService {
-        RAMEpisodeServiceRealisation(network: networkService)
+    /// Episodes services access
+    public var episodes: RAMEpisodesService {
+        RAMEpisodesServiceImp(networkService: networkService)
     }
+
+    /// Default init
     public init() {}
 }
