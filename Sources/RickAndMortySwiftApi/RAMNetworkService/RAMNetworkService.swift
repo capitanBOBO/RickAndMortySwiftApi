@@ -53,4 +53,22 @@ struct RAMNetworkService: RAMNetworkServiceInterface {
         return task
     }
 
+    func execute(_ endpoint: RAMEndpointInterface) async throws -> Data {
+        guard let request = prepareRequest(for: endpoint) else {
+            throw RAMNetworkError.invalidUrl
+        }
+        do {
+            let result: (Data, URLResponse) = try await session.data(for: request, delegate: nil)
+            guard let response = result.1 as? HTTPURLResponse else {
+                throw RAMNetworkError.invalidResponse
+            }
+            guard response.statusCode >= 200 || response.statusCode < 300 else {
+                throw RAMNetworkError.invalidStatusCode(response.statusCode)
+            }
+            return result.0
+        } catch {
+            throw RAMNetworkError.invalidResponse
+        }
+    }
 }
+
