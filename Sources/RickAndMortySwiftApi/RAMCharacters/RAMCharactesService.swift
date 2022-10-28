@@ -122,6 +122,6 @@ public protocol RAMCharactersService {
 
     - Returns: discardable URLSessionTask (optional)
     */
-    @discardableResult func getCharacters(filter: RAMCharacterFilter, completion: @escaping (Result<[RAMCharacterModel], Error>)->()) -> URLSessionTask?
+    @discardableResult func getCharacters(page: UInt, filter: RAMCharacterFilter, completion: @escaping (Result<[RAMCharacterModel], Error>)->()) -> URLSessionTask?
 }
 

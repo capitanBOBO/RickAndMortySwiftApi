@@ -89,5 +89,6 @@ public protocol RAMEpisodesService {
 
     - Returns: discardable URLSessionTask (optional)
     */
-    @discardableResult func getEpisodes(filter: RAMEpisodeFilter, completion: @escaping (Result<[RAMEpisodeModel], Error>)->()) -> URLSessionTask?
+    @discardableResult func getEpisodes(page: UInt, filter: RAMEpisodeFilter, completion: @escaping (Result<[RAMEpisodeModel], Error>)->()) -> URLSessionTask?
 }
+

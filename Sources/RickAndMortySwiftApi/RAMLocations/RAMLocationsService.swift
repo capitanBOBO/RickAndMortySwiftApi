@@ -102,5 +102,5 @@ public protocol RAMLocationsService {
 
     - Returns: discardable URLSessionTask (optional)
     */
-    @discardableResult func getLocations(filter: RAMLocationFilter, completion: @escaping (Result<[RAMLocationModel], Error>)->()) -> URLSessionTask?
+    @discardableResult func getLocations(page: UInt, filter: RAMLocationFilter, completion: @escaping (Result<[RAMLocationModel], Error>)->()) -> URLSessionTask?
 }

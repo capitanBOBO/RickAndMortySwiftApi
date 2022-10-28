@@ -31,7 +31,7 @@ struct RAMLocationsServiceImp: RAMLocationsService {
     @discardableResult public func getLocations(ids: [UInt], completion: @escaping (Result<[RAMLocationModel], Error>)->()) -> URLSessionTask? {
         return service.getItems(ids: ids, completion: completion)
     }
-    @discardableResult public func getLocations(filter: RAMLocationFilter, completion: @escaping (Result<[RAMLocationModel], Error>)->()) -> URLSessionTask? {
-        return service.getItems(filter: filter, completion: completion)
+    @discardableResult public func getLocations(page: UInt, filter: RAMLocationFilter, completion: @escaping (Result<[RAMLocationModel], Error>)->()) -> URLSessionTask? {
+        return service.getItems(page: page, filter: filter, completion: completion)
     }
 }

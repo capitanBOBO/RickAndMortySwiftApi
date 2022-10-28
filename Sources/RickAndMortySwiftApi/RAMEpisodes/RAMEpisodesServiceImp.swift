@@ -30,7 +30,7 @@ struct RAMEpisodesServiceImp: RAMEpisodesService {
     @discardableResult func getEpisodes(ids: [UInt], completion: @escaping (Result<[RAMEpisodeModel], Error>)->()) -> URLSessionTask? {
         return service.getItems(ids: ids, completion: completion)
     }
-    @discardableResult func getEpisodes(filter: RAMEpisodeFilter, completion: @escaping (Result<[RAMEpisodeModel], Error>)->()) -> URLSessionTask? {
-        return service.getItems(filter: filter, completion: completion)
+    @discardableResult func getEpisodes(page: UInt, filter: RAMEpisodeFilter, completion: @escaping (Result<[RAMEpisodeModel], Error>)->()) -> URLSessionTask? {
+        return service.getItems(page: page, filter: filter, completion: completion)
     }
 }

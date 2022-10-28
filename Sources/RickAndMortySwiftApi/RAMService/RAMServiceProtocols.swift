@@ -12,4 +12,3 @@ protocol RAMEndpointInterface {
 protocol RAMBasePath {
     static var basePath: String { get }
 }
-

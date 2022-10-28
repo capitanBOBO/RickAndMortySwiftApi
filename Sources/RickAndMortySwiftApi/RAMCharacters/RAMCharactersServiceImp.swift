@@ -32,7 +32,7 @@ struct RAMCharactesServiceImp: RAMCharactersService {
         return service.getItems(ids: ids, completion: completion)
     }
 
-    @discardableResult public func getCharacters(filter: RAMCharacterFilter, completion: @escaping (Result<[RAMCharacterModel], Error>)->()) -> URLSessionTask? {
-        return service.getItems(filter: filter, completion: completion)
+    @discardableResult public func getCharacters(page: UInt, filter: RAMCharacterFilter, completion: @escaping (Result<[RAMCharacterModel], Error>)->()) -> URLSessionTask? {
+        return service.getItems(page: page, filter: filter, completion: completion)
     }
 }
