@@ -32,7 +32,7 @@ ramApi.episodes.getEpisodes(ids: [1, 5]) { result in
 }
 
 let filter = RAMCharacterFilter(name: "Rick")
-ramApi.characters.getCharacters(filter: filter) { result in
+ramApi.characters.getCharacters(page: 0, filter: filter) { result in
 // do some stuff
 }
 ```
