@@ -5,7 +5,7 @@ import Foundation
 final class RickAndMortyServiceTest: XCTestCase {
     private var network = RAMNetworkServiceMock()
     private var characterService: RAMCharactersService {
-        RAMCharactesServiceRealisation(networkService: network)
+        RAMCharactesServiceImp(networkService: network)
     }
     private let expect = XCTestExpectation(description: "Character service")
 
@@ -70,7 +70,7 @@ final class RickAndMortyServiceTest: XCTestCase {
     func testCharactersGetByFiliter() {
        network.responseFileName = "GetAllCharactersResponse"
        let filter = RAMCharacterFilter(name: "Rick")
-       characterService.getCharacters(filter: filter) { [weak self] result in
+       characterService.getCharacters(page: 0, filter: filter) { [weak self] result in
            switch result {
            case .success(let characters):
                 XCTAssertTrue(characters.count == 1, "Invalid characters count")

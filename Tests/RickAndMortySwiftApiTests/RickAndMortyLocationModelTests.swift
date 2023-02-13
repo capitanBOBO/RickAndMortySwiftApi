@@ -4,8 +4,8 @@ import Foundation
 
 final class RickAndMortyLocationModelTests: XCTestCase {
     private var network = RAMNetworkServiceMock()
-    private var locationService: RAMLocationService {
-        return RAMLocationServiceRealisation(network: network)
+    private var locationService: RAMLocationsService {
+        return RAMLocationsServiceImp(networkService: network)
     }
 
     func testLocationModelParsing() {
