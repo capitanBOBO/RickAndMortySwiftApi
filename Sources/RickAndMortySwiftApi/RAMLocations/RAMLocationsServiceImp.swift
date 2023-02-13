@@ -34,4 +34,38 @@ struct RAMLocationsServiceImp: RAMLocationsService {
     @discardableResult public func getLocations(page: UInt, filter: RAMLocationFilter, completion: @escaping (Result<[RAMLocationModel], Error>)->()) -> URLSessionTask? {
         return service.getItems(page: page, filter: filter, completion: completion)
     }
+
+    @available(iOS 15, macOS 12, *)
+    public func getAll(page: UInt) async throws -> [RAMLocationModel] {
+        return try await withCheckedThrowingContinuation { (cont: CheckedContinuation<[RAMLocationModel], Error>) in
+            service.getAllItems(page: page) { cont.resume(with: $0) }
+        }
+    }
+
+    @available(iOS 15, macOS 12, *)
+    public func getLocation(id: UInt) async throws -> RAMLocationModel? {
+        return try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<RAMLocationModel?, Error>) in
+            service.getItem(id: id) { result in
+                continuation.resume(with: result)
+            }
+        }
+    }
+
+    @available(iOS 15, macOS 12, *)
+    public func getLocations(ids: [UInt]) async throws -> [RAMLocationModel] {
+        return try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[RAMLocationModel], Error>) in
+            service.getItems(ids: ids) { result in
+                continuation.resume(with: result)
+            }
+        } 
+    }
+
+    @available(iOS 15, macOS 12, *)
+    public func getLocations(page: UInt, filter: RAMLocationFilter) async throws -> [RAMLocationModel] {
+        return try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[RAMLocationModel], Error>) in
+            service.getItems(page: page, filter: filter) { result in
+                continuation.resume(with: result)
+            }
+        }
+    }
 }

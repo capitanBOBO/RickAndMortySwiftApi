@@ -103,4 +103,13 @@ public protocol RAMLocationsService {
     - Returns: discardable URLSessionTask (optional)
     */
     @discardableResult func getLocations(page: UInt, filter: RAMLocationFilter, completion: @escaping (Result<[RAMLocationModel], Error>)->()) -> URLSessionTask?
+
+    @available(iOS 15, macOS 12, *)
+    func getAll(page: UInt) async throws -> [RAMLocationModel]
+    @available(iOS 15, macOS 12, *)
+    func getLocation(id: UInt) async throws -> RAMLocationModel?
+    @available(iOS 15, macOS 12, *)
+    func getLocations(ids: [UInt]) async throws -> [RAMLocationModel]
+    @available(iOS 15, macOS 12, *)
+    func getLocations(page: UInt, filter: RAMLocationFilter) async throws -> [RAMLocationModel]
 }

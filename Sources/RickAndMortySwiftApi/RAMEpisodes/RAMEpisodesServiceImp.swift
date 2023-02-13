@@ -33,4 +33,33 @@ struct RAMEpisodesServiceImp: RAMEpisodesService {
     @discardableResult func getEpisodes(page: UInt, filter: RAMEpisodeFilter, completion: @escaping (Result<[RAMEpisodeModel], Error>)->()) -> URLSessionTask? {
         return service.getItems(page: page, filter: filter, completion: completion)
     }
+
+    @available(iOS 15, macOS 12, *)
+    func getAll(page: UInt) async throws -> [RAMEpisodeModel] {
+        return try await withCheckedThrowingContinuation { (cont: CheckedContinuation<[RAMEpisodeModel], Error>) in
+            service.getAllItems(page: page) { cont.resume(with: $0) }
+        }
+    }
+
+    @available(iOS 15, macOS 12, *)
+    func getEpisodes(id: UInt) async throws -> RAMEpisodeModel? {
+        return try await withCheckedThrowingContinuation { (cont: CheckedContinuation<RAMEpisodeModel?, Error>) in
+            service.getItem(id: id) { cont.resume(with: $0) }
+        }
+    }
+
+    @available(iOS 15, macOS 12, *)
+    func getEpisodes(ids: [UInt]) async throws -> [RAMEpisodeModel] {
+        return try await withCheckedThrowingContinuation { (cont: CheckedContinuation<[RAMEpisodeModel], Error>) in
+            service.getItems(ids: ids) { cont.resume(with: $0) }
+        }
+    }
+
+    @available(iOS 15, macOS 12, *)
+    func getEpisodes(page: UInt, filter: RAMEpisodeFilter) async throws -> [RAMEpisodeModel] {
+        return try await withCheckedThrowingContinuation { (cont: CheckedContinuation<[RAMEpisodeModel], Error>) in
+            service.getItems(page: page, filter: filter) { cont.resume(with: $0) }
+        }
+    }
+
 }

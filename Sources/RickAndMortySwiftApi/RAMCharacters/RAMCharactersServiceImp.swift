@@ -35,4 +35,29 @@ struct RAMCharactesServiceImp: RAMCharactersService {
     @discardableResult public func getCharacters(page: UInt, filter: RAMCharacterFilter, completion: @escaping (Result<[RAMCharacterModel], Error>)->()) -> URLSessionTask? {
         return service.getItems(page: page, filter: filter, completion: completion)
     }
+
+    @available(iOS 15, macOS 12, *)
+    public func getAll(page: UInt) async throws -> [RAMCharacterModel] {
+        return try await withCheckedThrowingContinuation { (cont: CheckedContinuation<[RAMCharacterModel], Error>) in
+            service.getAllItems(page: page) { cont.resume(with: $0) }
+        }
+    }
+    @available(iOS 15, macOS 12, *)
+    public func getCharacter(id: UInt) async throws -> RAMCharacterModel? {
+        return try await withCheckedThrowingContinuation { (cont: CheckedContinuation<RAMCharacterModel?, Error>) in
+            service.getItem(id: id) { cont.resume(with: $0) }
+        }
+    }
+    @available(iOS 15, macOS 12, *)
+    public func getCharacters(ids: [UInt]) async throws -> [RAMCharacterModel] {
+        return try await withCheckedThrowingContinuation { (cont: CheckedContinuation<[RAMCharacterModel], Error>) in
+            service.getItems(ids: ids) { cont.resume(with: $0) }
+        }
+    }
+    @available(iOS 15, macOS 12, *)
+    public func getCharacters(page: UInt, filter: RAMCharacterFilter) async throws -> [RAMCharacterModel] {
+        return try await withCheckedThrowingContinuation { (cont: CheckedContinuation<[RAMCharacterModel], Error>) in 
+            service.getItems(page: page, filter: filter) { cont.resume(with: $0) }
+        }
+    }
 }

@@ -90,5 +90,13 @@ public protocol RAMEpisodesService {
     - Returns: discardable URLSessionTask (optional)
     */
     @discardableResult func getEpisodes(page: UInt, filter: RAMEpisodeFilter, completion: @escaping (Result<[RAMEpisodeModel], Error>)->()) -> URLSessionTask?
-}
 
+    @available(iOS 15, macOS 12, *)
+    func getAll(page: UInt) async throws -> [RAMEpisodeModel]
+    @available(iOS 15, macOS 12, *)
+    func getEpisodes(id: UInt) async throws -> RAMEpisodeModel?
+    @available(iOS 15, macOS 12, *)
+    func getEpisodes(ids: [UInt]) async throws -> [RAMEpisodeModel]
+    @available(iOS 15, macOS 12, *)
+    func getEpisodes(page: UInt, filter: RAMEpisodeFilter) async throws -> [RAMEpisodeModel]
+}

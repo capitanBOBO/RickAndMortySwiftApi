@@ -123,5 +123,14 @@ public protocol RAMCharactersService {
     - Returns: discardable URLSessionTask (optional)
     */
     @discardableResult func getCharacters(page: UInt, filter: RAMCharacterFilter, completion: @escaping (Result<[RAMCharacterModel], Error>)->()) -> URLSessionTask?
+
+    @available(iOS 15, macOS 12, *)
+    func getAll(page: UInt) async throws -> [RAMCharacterModel]
+    @available(iOS 15, macOS 12, *)
+    func getCharacter(id: UInt) async throws -> RAMCharacterModel?
+    @available(iOS 15, macOS 12, *)
+    func getCharacters(ids: [UInt]) async throws -> [RAMCharacterModel]
+    @available(iOS 15, macOS 12, *)
+    func getCharacters(page: UInt, filter: RAMCharacterFilter) async throws -> [RAMCharacterModel]
 }
 
