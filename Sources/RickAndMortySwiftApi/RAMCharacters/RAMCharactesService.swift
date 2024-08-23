@@ -83,6 +83,32 @@ public struct RAMCharacterFilter: RAMFilter {
 
 /// Characters service. Allows to request all characters or characters by id/filter
 public protocol RAMCharactersService {
+    
+    /// Requests all characters for specific page (async/await)
+    /// - Parameter page: characters list page, start with 1
+    /// - Returns: array of `RAMCharacterModel`
+    @available(iOS 13.0, macOS 12.0, *)
+    func getAll(page: UInt) async throws -> [RAMCharacterModel]
+    
+    /// Request character by id (async/await)
+    /// - Parameter id: character id
+    /// - Returns: `RAMCharacterModel`(optional)
+    @available(iOS 13.0, macOS 12.0, *)
+    func getCharacter(id: UInt) async throws -> RAMCharacterModel?
+    
+    /// Requests characters by ids
+    /// - Parameter ids: array of charater ids
+    /// - Returns: array of `RAMCharactermodel`
+    @available(iOS 13.0, macOS 12.0, *)
+    func getCharacters(ids: [UInt]) async throws -> [RAMCharacterModel]
+    
+    /// Requests characters by filter
+    /// - Parameters:
+    ///   - page: characters list page, start with 1
+    ///   - filter: characters filter `RAMCharacterFilter`
+    /// - Returns: array of `RAMCharacterModel`
+    @available(iOS 13.0, macOS 12.0, *)
+    func getCharacters(page: UInt, filter: RAMCharacterFilter) async throws -> [RAMCharacterModel]
 
     /**
     Requests all characters for specific page

@@ -51,6 +51,33 @@ public struct RAMEpisodeFilter: RAMFilter {
 /// Episodes service. Allows to request all episodes or episodes by id/filter
 public protocol RAMEpisodesService {
 
+    
+    /// Requests all Episodes for specific page (async/await)
+    /// - Parameter page: Episodes list page, start with 1
+    /// - Returns: array of `RAMEpisodeModel`
+    @available(iOS 13.0, macOS 12.0, *)
+    func getAll(page: UInt) async throws -> [RAMEpisodeModel]
+    
+    /// Request Episode by id (async/await)
+    /// - Parameter id: Episode id
+    /// - Returns: `RAMEpisodeModel`(optional)
+    @available(iOS 13.0, macOS 12.0, *)
+    func getEpisode(id: UInt) async throws -> RAMEpisodeModel?
+    
+    /// Requests Episodes by ids
+    /// - Parameter ids: array of charater ids
+    /// - Returns: array of `RAMEpisodemodel`
+    @available(iOS 13.0, macOS 12.0, *)
+    func getEpisodes(ids: [UInt]) async throws -> [RAMEpisodeModel]
+    
+    /// Requests Episodes by filter
+    /// - Parameters:
+    ///   - page: Episodes list page, start with 1
+    ///   - filter: Episodes filter `RAMEpisodeFilter`
+    /// - Returns: array of `RAMEpisodeModel`
+    @available(iOS 13.0, macOS 12.0, *)
+    func getEpisodes(page: UInt, filter: RAMEpisodeFilter) async throws -> [RAMEpisodeModel]
+
     /**
     Requests all episodes for specific page
     - Parameters:

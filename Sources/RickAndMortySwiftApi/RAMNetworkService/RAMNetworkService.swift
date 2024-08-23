@@ -8,6 +8,8 @@ enum RAMNetworkError: Error {
 }
 
 protocol RAMNetworkServiceInterface {
+    @available(iOS 13.0, macOS 12.0, *)
+    func execute(_ endpoint: RAMEndpointInterface) async throws -> Data
     @discardableResult func execute(_ endpoint: RAMEndpointInterface, completion: @escaping (Result<Data, Error>) -> Void) -> URLSessionTask?
 }
 
@@ -22,6 +24,25 @@ struct RAMNetworkService: RAMNetworkServiceInterface {
         var request = URLRequest(url: url)
         request.httpMethod = endpoint.method
         return request
+    }
+
+    @available(iOS 13.0, macOS 12.0, *)
+    func execute(_ endpoint: RAMEndpointInterface) async throws -> Data {
+        guard let request = prepareRequest(for: endpoint) else {
+            throw RAMNetworkError.invalidUrl
+        }
+        do {
+            let (data, response) = try await session.data(for: request)
+            guard let response = response as? HTTPURLResponse else {
+                throw RAMNetworkError.invalidResponse
+            }
+            guard response.statusCode >= 200 || response.statusCode < 300 else {
+                throw RAMNetworkError.invalidStatusCode(response.statusCode)
+            }
+            return data
+        } catch {
+            throw error
+        }
     }
 
     @discardableResult func execute(_ endpoint: RAMEndpointInterface, completion: @escaping (Result<Data, Error>) -> Void) -> URLSessionTask? {
