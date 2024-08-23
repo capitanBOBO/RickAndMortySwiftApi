@@ -6,7 +6,7 @@ enum RAMCharacterBasePath: RAMBasePath {
 }
 
 /// RAMCharactersService realisation
-struct RAMCharactesServiceImp: RAMCharactersService {
+final class RAMCharactesServiceImp: RAMCharactersService {
     private typealias RAMServiceAlias = RAMService<RAMCharacterModel, RAMCharacterFilter, RAMCharacterBasePath>
     private let service: RAMServiceAlias
     /**
@@ -20,19 +20,40 @@ struct RAMCharactesServiceImp: RAMCharactersService {
         service = RAMServiceAlias(networkService)
     }
 
-    @discardableResult public func getAll(page: UInt, completion: @escaping (Result<[RAMCharacterModel], Error>)->()) -> URLSessionTask? {
-        return service.getAllItems(page: page, completion: completion)
+    @available(iOS 13.0, macOS 12.0, *)
+    func getAll(page: UInt) async throws -> [RAMCharacterModel] {
+        return try await service.getAllItems(page: page)
     }
 
-    @discardableResult public func getCharacter(id: UInt, completion: @escaping (Result<RAMCharacterModel?, Error>)->()) -> URLSessionTask? {
+    @available(iOS 13.0, macOS 12.0, *)
+    func getCharacter(id: UInt) async throws -> RAMCharacterModel? {
+        return try await service.getItem(id: id)
+    }
+    
+    @available(iOS 13.0, macOS 12.0, *)
+    func getCharacters(ids: [UInt]) async throws -> [RAMCharacterModel] {
+        return try await service.getItems(ids: ids)
+    }
+    
+    @available(iOS 13.0, macOS 12.0, *)
+    func getCharacters(page: UInt, filter: RAMCharacterFilter) async throws -> [RAMCharacterModel] {
+        return try await service.getItems(page: page, filter: filter)
+    }
+
+    @discardableResult func getAll(page: UInt, completion: @escaping (Result<[RAMCharacterModel], Error>)->()) -> URLSessionTask? {
+        return service.getAllItems(page: page, completion: completion)
+    }
+    
+
+    @discardableResult func getCharacter(id: UInt, completion: @escaping (Result<RAMCharacterModel?, Error>)->()) -> URLSessionTask? {
         return service.getItem(id: id, completion: completion)
     }
 
-    @discardableResult public func getCharacters(ids: [UInt], completion: @escaping (Result<[RAMCharacterModel], Error>)->()) -> URLSessionTask? {
+    @discardableResult func getCharacters(ids: [UInt], completion: @escaping (Result<[RAMCharacterModel], Error>)->()) -> URLSessionTask? {
         return service.getItems(ids: ids, completion: completion)
     }
 
-    @discardableResult public func getCharacters(page: UInt, filter: RAMCharacterFilter, completion: @escaping (Result<[RAMCharacterModel], Error>)->()) -> URLSessionTask? {
+    @discardableResult func getCharacters(page: UInt, filter: RAMCharacterFilter, completion: @escaping (Result<[RAMCharacterModel], Error>)->()) -> URLSessionTask? {
         return service.getItems(page: page, filter: filter, completion: completion)
     }
 }

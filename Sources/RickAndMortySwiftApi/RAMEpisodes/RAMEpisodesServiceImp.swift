@@ -6,7 +6,7 @@ enum RAMEpisodeBasePath: RAMBasePath {
 }
 
 /// RAMEpisodeService realisation
-struct RAMEpisodesServiceImp: RAMEpisodesService {
+final class RAMEpisodesServiceImp: RAMEpisodesService {
     private typealias RAMServiceAlias = RAMService<RAMEpisodeModel, RAMEpisodeFilter, RAMEpisodeBasePath>
 
     private let service: RAMServiceAlias
@@ -19,6 +19,26 @@ struct RAMEpisodesServiceImp: RAMEpisodesService {
     */
     init(networkService: RAMNetworkServiceInterface) {
         service = RAMServiceAlias(networkService)
+    }
+
+    @available(iOS 13.0, macOS 12.0, *)
+    func getAll(page: UInt) async throws -> [RAMEpisodeModel] {
+        return try await service.getAllItems(page: page)
+    }
+    
+    @available(iOS 13.0, macOS 12.0, *)
+    func getEpisode(id: UInt) async throws -> RAMEpisodeModel? {
+        return try await service.getItem(id: id)
+    }
+    
+    @available(iOS 13.0, macOS 12.0, *)
+    func getEpisodes(ids: [UInt]) async throws -> [RAMEpisodeModel] {
+        return try await service.getItems(ids: ids)
+    }
+    
+    @available(iOS 13.0, macOS 12.0, *)
+    func getEpisodes(page: UInt, filter: RAMEpisodeFilter) async throws -> [RAMEpisodeModel] {
+        return try await service.getItems(page: page, filter: filter)
     }
 
     @discardableResult func getAll(page: UInt, completion: @escaping (Result<[RAMEpisodeModel], Error>)->()) -> URLSessionTask? {

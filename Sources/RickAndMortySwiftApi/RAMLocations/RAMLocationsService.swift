@@ -64,6 +64,33 @@ public struct RAMLocationFilter: RAMFilter {
 /// Locations service. Allows to request all locations or locations by id/filter
 public protocol RAMLocationsService {
 
+    
+    /// Requests all Locations for specific page (async/await)
+    /// - Parameter page: Locations list page, start with 1
+    /// - Returns: array of `RAMLocationModel`
+    @available(iOS 13.0, macOS 12.0, *)
+    func getAll(page: UInt) async throws -> [RAMLocationModel]
+    
+    /// Request Location by id (async/await)
+    /// - Parameter id: Location id
+    /// - Returns: `RAMLocationModel`(optional)
+    @available(iOS 13.0, macOS 12.0, *)
+    func getLocation(id: UInt) async throws -> RAMLocationModel?
+    
+    /// Requests Locations by ids
+    /// - Parameter ids: array of charater ids
+    /// - Returns: array of `RAMLocationModel`
+    @available(iOS 13.0, macOS 12.0, *)
+    func getLocations(ids: [UInt]) async throws -> [RAMLocationModel]
+    
+    /// Requests Locations by filter
+    /// - Parameters:
+    ///   - page: Locations list page, start with 1
+    ///   - filter: Locations filter `RAMLocationFilter`
+    /// - Returns: array of `RAMLocationModel`
+    @available(iOS 13.0, macOS 12.0, *)
+    func getLocations(page: UInt, filter: RAMLocationFilter) async throws -> [RAMLocationModel]
+
     /**
     Requests all locations for specific page
     - Parameters:

@@ -56,6 +56,18 @@ struct RAMService<T: Codable, U: RAMFilter, O: RAMBasePath> {
         self.network = networkService
     }
 
+    @available(iOS 13.0, macOS 12.0, *)
+    func getAllItems(page: UInt) async throws -> [T] {
+        let endpoint = RAMEndpoint<U, O>.getAllItems(page)
+        do {
+            let data: Data = try await network.execute(endpoint)
+            let response = try JSONDecoder().decode(RAMServiceResponse<T>.self, from: data)
+            return response.results ?? []
+        } catch {
+            throw error
+        }
+    }
+
     @discardableResult public func getAllItems(page: UInt, completion: @escaping (Result<[T], Error>) -> ()) -> URLSessionTask? {
         let endpoint = RAMEndpoint<U, O>.getAllItems(page)
 
@@ -78,6 +90,18 @@ struct RAMService<T: Codable, U: RAMFilter, O: RAMBasePath> {
         }
     }
 
+    @available(iOS 13.0, macOS 12.0, *)
+    func getItem(id: UInt) async throws -> T {
+        let endpoint = RAMEndpoint<U, O>.getItemById(id)
+        do {
+            let data: Data = try await network.execute(endpoint)
+            let response = try JSONDecoder().decode(T.self, from: data)
+            return response
+        } catch {
+            throw error
+        }
+    }
+    
     @discardableResult public func getItem(id: UInt, completion: @escaping (Result<T?, Error>) -> ()) -> URLSessionTask? {
         let endpoint = RAMEndpoint<U, O>.getItemById(id)
 
@@ -99,6 +123,19 @@ struct RAMService<T: Codable, U: RAMFilter, O: RAMBasePath> {
             }
         }
 
+    }
+
+    @available(iOS 13.0, macOS 12.0, *)
+    func getItems(ids: [UInt]) async throws -> [T] {
+        let endpoint = RAMEndpoint<U, O>.getItemsByIds(ids)
+        
+        do {
+            let data: Data = try await network.execute(endpoint)
+            let response = try JSONDecoder().decode([T].self, from: data)
+            return response
+        } catch {
+            throw error
+        }
     }
 
     @discardableResult public func getItems(ids: [UInt], completion: @escaping (Result<[T], Error>) -> ()) -> URLSessionTask? {
@@ -124,6 +161,19 @@ struct RAMService<T: Codable, U: RAMFilter, O: RAMBasePath> {
 
     }
 
+    @available(iOS 13.0, macOS 12.0, *)
+    func getItems(page: UInt, filter: U) async throws -> [T] {
+        let endpoint = RAMEndpoint<U, O>.getItemsByFilter(page, filter)
+        
+        do {
+            let data: Data = try await network.execute(endpoint)
+            let response = try JSONDecoder().decode(RAMServiceResponse<T>.self, from: data)
+            return response.results ?? []
+        } catch {
+            throw error
+        }
+    }
+    
     @discardableResult public func getItems(page: UInt, filter: U, completion: @escaping (Result<[T], Error>) -> ()) -> URLSessionTask? {
        let endpoint = RAMEndpoint<U, O>.getItemsByFilter(page, filter)
 
